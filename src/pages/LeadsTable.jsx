@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../utils/Axios";
+import toast, { Toaster } from 'react-hot-toast';
+
 
 const TableExample = () => {
   const [leads, setLeads] = useState([]);
@@ -48,6 +50,12 @@ const TableExample = () => {
 
   const handleModalClose = () => {
     setModalOpen(false);
+    setNewLead({
+      name: "",
+      city: "",
+      mobile: "",
+      status: "Pending",
+    });
   };
 
 
@@ -59,11 +67,12 @@ const TableExample = () => {
     };
 
     if (!validateMobile()) {
-      alert('Please enter a valid 10-digit mobile number');
+      toast.error('Please enter a valid 10-digit mobile number');
       return;
     }
-    
+
     await axiosInstance.post("/new_lead", newLead).then((res)=>{
+      toast.success(res.data.message)
       setLeads((prevLeads) => {
         if (prevLeads.length === 0) {
           return [{ ...res.data.data}];
@@ -71,7 +80,6 @@ const TableExample = () => {
           return [...prevLeads, { ...res.data.data}];
       });
     })
-
     setModalOpen(false);
     setNewLead({
       name: "",
@@ -87,6 +95,11 @@ const TableExample = () => {
   
   return (
     <>
+
+    <Toaster
+  position="top-right"
+  reverseOrder={false}
+/>
       <div className="bg-purple-900 w-full h-20 flex items-center justify-center">
         <h1 className="text-4xl text-white font-semibold ">BROMAG INDIA </h1>
       </div>
