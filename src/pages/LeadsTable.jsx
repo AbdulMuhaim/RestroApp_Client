@@ -139,7 +139,8 @@ const TableExample = () => {
                 </th>
               </tr>
             </thead>
-            <tbody>
+
+            {leads.length===0? <p className="text-lg font-semibold ml-2 p-2">! No leads available at the moment.</p> :<tbody>
               {leads
                 .filter((lead) => lead.status === "Pending")
                 .map((lead) => (
@@ -163,7 +164,7 @@ const TableExample = () => {
                     </td>
                   </tr>
                 ))}
-            </tbody>
+            </tbody>}
           </table>
         </div>
       </div>

@@ -76,7 +76,7 @@ function FollowUpLeads() {
                 </th>
               </tr>
             </thead>
-            <tbody>
+            {leads.length===0? <p className="text-lg font-semibold ml-2 p-2">! No leads available at the moment.</p> :<tbody>
               {leads.map((lead) => (
                 <tr key={lead._id}>
                   <td className="py-2 px-6 border-b">{lead.name}</td>
@@ -109,7 +109,7 @@ function FollowUpLeads() {
                   )}
                 </tr>
               ))}
-            </tbody>
+            </tbody>}
           </table>
         </div>
       </div>
