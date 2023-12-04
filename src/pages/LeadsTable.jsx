@@ -75,9 +75,9 @@ const TableExample = () => {
       toast.success(res.data.message)
       setLeads((prevLeads) => {
         if (prevLeads.length === 0) {
-          return [{ ...res.data.data}];
+          return [{ ...newLead, _id: 1 }];
         }
-          return [...prevLeads, { ...res.data.data}];
+        return [...prevLeads, { ...newLead, _id: prevLeads.length + 1 }];
       });
     })
     setModalOpen(false);
@@ -90,9 +90,6 @@ const TableExample = () => {
   };
 
 
-
-  
-  
   return (
     <>
 
@@ -138,7 +135,7 @@ const TableExample = () => {
                   Status
                 </th>
               </tr>
-            </thead>
+            </thead> 
 
             {leads.length===0? <p className="text-lg font-semibold ml-2 p-2">! No leads available at the moment.</p> :<tbody>
               {leads
