@@ -52,6 +52,17 @@ const TableExample = () => {
 
 
   const handleAddLead = async () => {
+
+    const validateMobile = () => {
+      const mobileRegex = /^\d{10}$/;
+      return mobileRegex.test(newLead.mobile);
+    };
+
+    if (!validateMobile()) {
+      alert('Please enter a valid 10-digit mobile number');
+      return;
+    }
+    
     await axiosInstance.post("/new_lead", newLead).then((res)=>{
       setLeads((prevLeads) => {
         if (prevLeads.length === 0) {
@@ -69,6 +80,8 @@ const TableExample = () => {
       status: "Pending",
     });
   };
+
+
 
   
   
@@ -181,14 +194,14 @@ const TableExample = () => {
                 />
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="contactNumber"
+                  htmlFor="mobile"
                 >
                   Contact Number:
                 </label>
                 <input
                   type="text"
-                  id="contactNumber"
-                  value={newLead.contactNumber}
+                  id="mobile"
+                  value={newLead.mobile}
                   onChange={(e) =>
                     setNewLead({ ...newLead, mobile: e.target.value })
                   }
