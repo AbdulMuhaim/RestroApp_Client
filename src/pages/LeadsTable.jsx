@@ -52,15 +52,15 @@ const TableExample = () => {
 
 
   const handleAddLead = async () => {
-    await axiosInstance.post("/new_lead", newLead);
-  
-    setLeads((prevLeads) => {
-      if (prevLeads.length === 0) {
-        return [{ ...newLead, id: 1 }];
-      }
-        return [...prevLeads, { ...newLead, id: prevLeads.length + 1 }];
-    });
-  
+    await axiosInstance.post("/new_lead", newLead).then((res)=>{
+      setLeads((prevLeads) => {
+        if (prevLeads.length === 0) {
+          return [{ ...res.data.data}];
+        }
+          return [...prevLeads, { ...res.data.data}];
+      });
+    })
+
     setModalOpen(false);
     setNewLead({
       name: "",
@@ -69,8 +69,9 @@ const TableExample = () => {
       status: "Pending",
     });
   };
-  
 
+  
+  
   return (
     <>
       <div className="bg-purple-900 w-full h-20 flex items-center justify-center">
@@ -116,13 +117,13 @@ const TableExample = () => {
               {leads
                 .filter((lead) => lead.status === "Pending")
                 .map((lead) => (
-                  <tr key={lead._id}>
-                    <td className="py-2 px-6 border-b">{lead.name}</td>
-                    <td className="py-2 px-6 border-b">{lead.city}</td>
-                    <td className="py-2 px-6 border-b">{lead.mobile}</td>
+                  <tr key={lead?._id}>
+                    <td className="py-2 px-6 border-b">{lead?.name}</td>
+                    <td className="py-2 px-6 border-b">{lead?.city}</td>
+                    <td className="py-2 px-6 border-b">{lead?.mobile}</td>
                     <td className="py-2 px-6 border-b">
                       <select
-                        value={lead.status}
+                        value={lead?.status}
                         onChange={(e) =>
                           handleStatusChange(lead._id, e.target.value)
                         }
